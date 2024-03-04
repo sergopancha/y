@@ -4,15 +4,20 @@ class Render {
 
     private
         $db,
+        $user,
         $tpl;
 
 
     /**
      * @param $connect
      */
-    public function __construct($connect)
+    /**
+     * @param Database $connect
+     */
+    public function __construct(Database $connect, User $user)
     {
         $this->db = $connect;
+        $this->user = $user;
         $this->tpl['themesList'] = $this->loadTpl('themes.list.html');
         $this->tpl['themesRow'] = $this->loadTpl('themes.row.html');
     }
@@ -64,7 +69,7 @@ class Render {
     public function drawThemesRow($idTheme, $data)
     {
         $htmlRow = str_replace('%id%', $data->theme_id, $this->tpl['themesRow']);
-        $htmlRow = str_replace('%name%', $data->theme_name, $htmlRow);
+        $htmlRow = str_replace('%name%', $data->theme_name.' '.$this->user->getUserHash(), $htmlRow);
 
         return $htmlRow;
     }
