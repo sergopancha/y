@@ -6,10 +6,15 @@ class User {
         $hash,
         $db;
 
+    /**
+     * @param Database $connect
+     */
     public function __construct(Database $connect)
     {
         $this->db = $connect;
-        if (isset($_COOKIE['user']) && ($_COOKIE['user'] != '')) {
+        if ( isset($_COOKIE['user']) && ($_COOKIE['user'] != '')
+            && isset($_COOKIE['hash']) && ($_COOKIE['hash'] != '')) {
+
             $this->id = $_COOKIE['user'];
             $this->hash = $_COOKIE['hash'];
         }
@@ -24,11 +29,17 @@ class User {
         }
     }
 
+    /**
+     * @return false|mixed|string
+     */
     public function getUserId()
     {
         return $this->id;
     }
 
+    /**
+     * @return mixed|string
+     */
     public function getUserHash()
     {
         return $this->hash;
