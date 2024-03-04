@@ -9,10 +9,8 @@ class Render {
 
 
     /**
-     * @param $connect
-     */
-    /**
      * @param Database $connect
+     * @param User $user
      */
     public function __construct(Database $connect, User $user)
     {
@@ -20,14 +18,15 @@ class Render {
         $this->user = $user;
         $this->tpl['themesList'] = $this->loadTpl('themes.list.html');
         $this->tpl['themesRow'] = $this->loadTpl('themes.row.html');
+        $this->tpl['themesRow'] = $this->loadTpl('themes.row.html');
     }
 
     /**
      * @return void
      */
-    public function showThemesList()
+    public function showThemesList(): void
     {
-        $layout = str_replace('%themeslist%',
+        $layout = str_replace('%themesList%',
             $this->getThemesList(), $this->tpl['themesList']);
         echo $layout;
     }
@@ -35,7 +34,7 @@ class Render {
     /**
      * @return string
      */
-    public function getThemesList()
+    public function getThemesList(): string
     {
             $this->db->query('select * from theme');
             $data = $this->db->resultset();
@@ -53,9 +52,9 @@ class Render {
 
     /**
      * @param $filename
-     * @return false|string
+     * @return string
      */
-    public function loadTpl($filename)
+    public function loadTpl($filename): string
     {
         return
             file_get_contents('tpl/'.$filename);
@@ -64,12 +63,12 @@ class Render {
     /**
      * @param $idTheme
      * @param $data
-     * @return array|string|string[]
+     * @return string
      */
-    public function drawThemesRow($idTheme, $data)
+    public function drawThemesRow($idTheme, $data): string
     {
         $htmlRow = str_replace('%id%', $data->theme_id, $this->tpl['themesRow']);
-        $htmlRow = str_replace('%name%', $data->theme_name.' '.$this->user->getUserHash(), $htmlRow);
+        $htmlRow = str_replace('%name%', $data->theme_name, $htmlRow);
 
         return $htmlRow;
     }
