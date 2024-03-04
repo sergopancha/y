@@ -1,4 +1,4 @@
-### Demo code for simple GeustBook application
+### Demo code for simple GuestBook application
 
 ```
 Author: Serey Panchenko, 04/Mar/2024
