@@ -15,6 +15,9 @@ class Template {
     {
         $this->db = $connect;
         $this->user = $user;
+
+        $this->tpl['header'] = $this->loadTpl('header.html');
+
     }
     /**
      * @param $filename
