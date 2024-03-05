@@ -1,26 +1,17 @@
 <?php
 
-class Render {
+class ThemesList extends Template {
 
-    private
-        $db,
-        $user,
-        $tpl;
-
-
-    /**
-     * @param Database $connect
-     * @param User $user
-     */
     public function __construct(Database $connect, User $user)
     {
-        $this->db = $connect;
-        $this->user = $user;
+        parent::__construct($connect, $user);
+
         $this->tpl['themesList'] = $this->loadTpl('themes.list.html');
         $this->tpl['themesRow'] = $this->loadTpl('themes.row.html');
         $this->tpl['themesRow'] = $this->loadTpl('themes.row.html');
-    }
 
+        $this->showThemesList();
+    }
     /**
      * @return void
      */
@@ -49,16 +40,6 @@ class Render {
         return $htmlList;
     }
 
-
-    /**
-     * @param $filename
-     * @return string
-     */
-    public function loadTpl($filename): string
-    {
-        return
-            file_get_contents('tpl/'.$filename);
-    }
 
     /**
      * @param $idTheme
