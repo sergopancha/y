@@ -1,12 +1,14 @@
 ### Demo code for simple GuestBook application
+version 0.1, draft 
 
 ```
-Author: Serey Panchenko, created 04/Mar/2024
+Author: Sergey Panchenko, created 04/Mar/2024
 ```
 
 PDO Class by Brad Traversy , source code https://gist.github.com/bradtraversy/a77931605ba9b7cf3326644e75530464
 
 Простой пример Гостевой книги на php 8.0.
+В разработке, часть функционала не реализована на данный момент.
 
 Без авторизации: при первом заходе на страницу выставляется cookie с уникальным значением в md5.
 
