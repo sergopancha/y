@@ -18,9 +18,12 @@ $user = new User($connect);
 // по умолчанию грузим список тематик
 $path = empty($_GET['mode'])? 'themeslist': trim(htmlentities($_GET['mode']));
 
+// если маршрут указан неверно, то грузим список тематик
 if ( !$route->check($path)) {
     $path = 'tememslist';
 }
+// подгружаем нужный класс, в конструкторе
+// класса запускается функционал
 else {
     if (!class_exists($path)){
         include "class/".$path.'.php';
