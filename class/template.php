@@ -83,4 +83,18 @@ class Template {
             (empty ($data) || empty($data->theme_name) || $data->theme_name == '')?
                 'без названия' : $data->theme_name;
     }
+
+    /**
+     * @param int $id
+     * @return bool
+     */
+    public function checkThemeId(int $id): bool
+    {
+        $this->db->query('select theme_id from theme where theme_id=:theme_id');
+        $this->db->bind(":theme_id", $id );
+        $data = $this->db->single();
+
+        return
+            !empty($data);
+    }
 }
