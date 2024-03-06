@@ -16,7 +16,7 @@ class Theme extends Template {
 
         $this->tpl['messagesList'] = $this->loadTpl('messages.list.html');
         $this->tpl['messagesRow'] = $this->loadTpl('messages.row.html');
-//        $this->tpl['themesRow'] = $this->loadTpl('themes.row.html');
+        $this->tpl['btnMessageAdd'] = $this->loadTpl('btn.message.add.html');
         $this->showMessagesList($this->id_theme);
     }
     /**
@@ -37,7 +37,9 @@ class Theme extends Template {
         $layout = str_replace('%header%', $this->tpl['header'], $this->tpl['messagesList']);
         $layout = str_replace('%footer%', $this->tpl['footer'], $layout);
         $layout = str_replace('%headerTitle%', $themeName, $layout);
+        $layout = str_replace('%btnMessageAdd%', $this->tpl['btnMessageAdd'], $layout);
         $layout = str_replace('%themeName%', $themeName, $layout);
+        $layout = str_replace('%btnMessageAdd-IdTheme%', $idTheme, $layout);
         $layout = str_replace('%messagesList%', $this->getMessagesList($this->id_theme), $layout);
         $layout = str_replace('%breadcrumb%', $this->makeBreadcrumb($arrBreadcrumb), $layout);
 
