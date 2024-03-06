@@ -86,7 +86,7 @@ class Theme extends Template {
         if ( !empty($data)) {
 
             $htmlList ='';
-            $htmlList .= '<table>';
+            $htmlList .= '<table border="1">';
 
             foreach ($data as $k => $message) {
                 $htmlList .= $this->drawMessagesRow($k, $message);
@@ -110,7 +110,7 @@ class Theme extends Template {
     {
         $htmlRow = str_replace('%id%', $data->m_id, $this->tpl['messagesRow']);
         $htmlRow = str_replace('%user%', $data->user_hash, $htmlRow);
-        $htmlRow = str_replace('%date%', date("d:m:Y H:m", $data->m_time), $htmlRow);
+        $htmlRow = str_replace('%date%', $this->renderMessageTime($data->m_time), $htmlRow);
         $htmlRow = str_replace('%name%', mb_substr($data->m_text, 0, 20).'...', $htmlRow);
 
         return $htmlRow;

@@ -40,7 +40,7 @@ class ThemesList extends Template {
             $this->db->query('select * from theme');
             $data = $this->db->resultset();
 
-            $htmlList = '<table>';
+            $htmlList = '<table border="1">';
 
         foreach ($data as $k=>$theme) {
             $htmlList .= $this->drawThemesRow($k, $theme);
