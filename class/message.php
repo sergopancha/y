@@ -8,7 +8,7 @@ class Message extends Template {
         parent::__construct($connect, $user);
         $this->id_message = (int) $_GET['id'];
 
-        if (!$this->checkMessageId($this->id_message)) {
+        if (!$this->checkMessageId($this->id_message) || $this->id_message<1) {
             die('message id:'.$this->id_message. ' not found');
         }
 
@@ -18,29 +18,47 @@ class Message extends Template {
     /**
      * @return void
      */
-    public function showMessage(int $idTheme): void
+    public function showMessage(int $idMessage): void
     {
-        $themeName = $this->getThemeName($idTheme);
+       // $themeName = $this->getThemeName($idTheme);
 
-        $arrBreadcrumb = [
-          [
-              'title' => 'Гостевая книга',
-              'url' => '/'
-          ],
-          ['title' => 'Темы',],
-          ['title' => $themeName]
-        ];
-        $layout = str_replace('%header%', $this->tpl['header'], $this->tpl['messagesList']);
-        $layout = str_replace('%footer%', $this->tpl['footer'], $layout);
-        $layout = str_replace('%headerTitle%', $themeName, $layout);
-        $layout = str_replace('%btnMessageAdd%', $this->tpl['btnMessageAdd'], $layout);
-        $layout = str_replace('%themeName%', $themeName, $layout);
-        $layout = str_replace('%btnMessageAdd-IdTheme%', $idTheme, $layout);
-        $layout = str_replace('%messagesList%', $this->getMessagesList($this->id_theme), $layout);
-        $layout = str_replace('%breadcrumb%', $this->makeBreadcrumb($arrBreadcrumb), $layout);
+        $message = $this->getMessage($idMessage);
 
-        echo $layout;
-    }
+
+        if ( !empty($message)) {
+
+            $messageTitle =
+                'Сообщение '.$idMessage.' '.$message->user_id.' '.$this->renderMessageTime($message->m_time);
+
+            $arrBreadcrumb = [
+                [
+                    'title' => 'Гостевая книга',
+                    'url' => '/'
+                ],
+                ['title' => 'Темы'],
+                ['title' => "<a href='/?mode=theme&id={$message->theme_id}'>{$message->theme_name}</a>"],
+                ['title' => $idMessage.' '.$message->user_id.' '.$this->renderMessageTime($message->m_time)]
+            ];
+
+            $layout = str_replace('%header%', $this->tpl['header'], $this->tpl['message']);
+            $layout = str_replace('%footer%', $this->tpl['footer'], $layout);
+            $layout = str_replace('%headerTitle%', $messageTitle, $layout);
+            $layout = str_replace('%themeName%', $message->theme_name, $layout);
+            $layout = str_replace('%breadcrumb%', $this->makeBreadcrumb($arrBreadcrumb), $layout);
+            $layout = str_replace('%idUser%', $message->user_id, $layout);
+            $layout = str_replace('%user%', $message->user_id, $layout);
+            $layout = str_replace('%messageTime%', $this->renderMessageTime($message->m_time), $layout);
+            $layout = str_replace('%messageText%', $message->m_text, $layout);
+
+
+
+
+            echo $layout;
+
+        }
+        else {
+            $html = 'Сообщений на эту тему ещё нет';
+        }}
 
     public function checkMessageId(int $id): bool
     {
@@ -55,49 +73,38 @@ class Message extends Template {
     /**
      * @return string
      */
-    public function getMessagesList(int $idTheme): string
+    public function getMessage(int $idMessage): mixed
     {
         $this->db->query('
-            select m.message_id as m_id, m.message_text as m_text, 
+            select m.message_text as m_text, 
             m.message_time as m_time,
-            u.user_hash
+            u.user_id, t.theme_name, t.theme_id
             from messages m 
             left join users u on u.user_id=m.user_id
-            where theme_id=:theme_id');
+            left join theme t on t.theme_id=m.theme_id
+            where message_id=:message_id');
 
-        $this->db->bind(":theme_id", $idTheme );
-        $data = $this->db->resultset();
+        $this->db->bind(":message_id", $idMessage );
+        $data = $this->db->single();
 
-        if ( !empty($data)) {
-
-            $htmlList ='';
-            $htmlList .= '<table border="1">';
-
-            foreach ($data as $k => $message) {
-                $htmlList .= $this->drawMessagesRow($k, $message);
-            }
-            $htmlList .= '</table>';
-        }
-        else {
-            $htmlList = 'Сообщений на эту тему ещё нет';
-        }
-
-        return $htmlList;
+        return $data;
     }
 
-
-    /**
-     * @param $idTheme
-     * @param $data
-     * @return string
-     */
-    public function drawMessagesRow($idTheme, $data): string
+    public function drawMessage(object $data): mixed
     {
-        $htmlRow = str_replace('%id%', $data->m_id, $this->tpl['messagesRow']);
-        $htmlRow = str_replace('%user%', $data->user_hash, $htmlRow);
-        $htmlRow = str_replace('%date%', $this->renderMessageTime($data->m_time), $htmlRow);
-        $htmlRow = str_replace('%name%', mb_substr($data->m_text, 0, 20).'...', $htmlRow);
+        if ( !empty($data)) {
 
-        return $htmlRow;
+            $html ='';
+
+            $html = str_replace('%idUser%', $data->user_id, $this->tpl['message']);
+            $html = str_replace('%user%', $data->user_id, $html);
+            $html = str_replace('%messageTime%', $this->renderMessageTime($data->m_time), $html);
+            $html = str_replace('%messageText%', $data->m_text, $html);
+        }
+        else {
+            $html = 'Сообщений на эту тему ещё нет';
+        }
+
+        return $html;
     }
 }
