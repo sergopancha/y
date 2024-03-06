@@ -17,12 +17,17 @@ class ThemesList extends Template {
      */
     public function showThemesList(): void
     {
+        $arrBreadcrumb = [
+            [ 'title' => 'Гостевая книга' ]
+        ];
+
         $layout = str_replace('%themesList%',
             $this->getThemesList(), $this->tpl['themesList']);
         $layout = str_replace('%header%', $this->tpl['header'], $layout);
         $layout = str_replace('%footer%', $this->tpl['footer'], $layout);
         $layout = str_replace('%headerTitle%', 'Гостевая книга', $layout);
         $layout = str_replace('%themesListIntro%', $this->tpl['themesListIntro'], $layout);
+        $layout = str_replace('%breadcrumb%', $this->makeBreadcrumb($arrBreadcrumb), $layout);
 
         echo $layout;
     }

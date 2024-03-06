@@ -25,11 +25,21 @@ class Theme extends Template {
     public function showMessagesList(Int $idTheme): void
     {
         $themeName = $this->getThemeName($idTheme);
+
+        $arrBreadcrumb = [
+          [
+              'title' => 'Гостевая книга',
+              'url' => '/'
+          ],
+          ['title' => 'Темы',],
+          ['title' => $themeName]
+        ];
         $layout = str_replace('%header%', $this->tpl['header'], $this->tpl['messagesList']);
         $layout = str_replace('%footer%', $this->tpl['footer'], $layout);
         $layout = str_replace('%headerTitle%', $themeName, $layout);
         $layout = str_replace('%themeName%', $themeName, $layout);
         $layout = str_replace('%messagesList%', $this->getMessagesList($this->id_theme), $layout);
+        $layout = str_replace('%breadcrumb%', $this->makeBreadcrumb($arrBreadcrumb), $layout);
 
         echo $layout;
     }
