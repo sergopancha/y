@@ -69,4 +69,19 @@ class Template {
         return
             date($pattern, $timestamp);
     }
+
+    /**
+     * @param int $id
+     * @return string
+     */
+    public function getThemeName(int $id): string
+    {
+        $this->db->query('select theme_name from theme where theme_id=:theme_id');
+        $this->db->bind(":theme_id", $id );
+        $data = $this->db->single();
+
+        return
+            (empty ($data) || empty($data->theme_name) || $data->theme_name == '')?
+                'без названия' : $data->theme_name;
+    }
 }

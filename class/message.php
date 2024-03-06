@@ -1,26 +1,24 @@
 <?php
 
-class Theme extends Template {
+class Message extends Template {
 
-    private $id_theme;
+    private $id_theme, $id_message;
     public function __construct(Database $connect, User $user)
     {
         parent::__construct($connect, $user);
-        $this->id_theme = (int) $_GET['id'];
+        $this->id_message = (int) $_GET['id'];
 
-        if (!$this->checkThemeId($this->id_theme)) {
-            die('theme id:'.$this->id_theme. ' not found');
+        if (!$this->checkMessageId($this->id_message)) {
+            die('message id:'.$this->id_message. ' not found');
         }
 
-        $this->tpl['messagesList'] = $this->loadTpl('messages.list.html');
-        $this->tpl['messagesRow'] = $this->loadTpl('messages.row.html');
-        $this->tpl['btnMessageAdd'] = $this->loadTpl('btn.message.add.html');
-        $this->showMessagesList($this->id_theme);
+        $this->tpl['message'] = $this->loadTpl('message.html');
+        $this->showMessage($this->id_message);
     }
     /**
      * @return void
      */
-    public function showMessagesList(int $idTheme): void
+    public function showMessage(int $idTheme): void
     {
         $themeName = $this->getThemeName($idTheme);
 
@@ -44,10 +42,10 @@ class Theme extends Template {
         echo $layout;
     }
 
-    public function checkThemeId(int $id): bool
+    public function checkMessageId(int $id): bool
     {
-        $this->db->query('select theme_id from theme where theme_id=:theme_id');
-        $this->db->bind(":theme_id", $id );
+        $this->db->query('select message_id from messages where message_id=:message_id');
+        $this->db->bind(":message_id", $id );
         $data = $this->db->single();
 
         return
