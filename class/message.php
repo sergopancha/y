@@ -2,7 +2,8 @@
 
 class Message extends Template {
 
-    private $id_theme, $id_message;
+    private
+        int $id_theme, $id_message;
     public function __construct(Database $connect, User $user)
     {
         parent::__construct($connect, $user);
