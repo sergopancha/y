@@ -71,7 +71,7 @@ class Database {
 	
 	// Get record row count
 	public function rowCount(){
-		return $this->stmt->fetchColumn();
+		return $this->stmt->rowCount();
 	}
 	
 	// Returns the last inserted ID
