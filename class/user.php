@@ -1,10 +1,9 @@
 <?php
 
 class User {
-    private
-        $id,
-        $hash,
-        $db;
+    private int $id;
+    private string $hash;
+    private Database $db;
 
     /**
      * @param Database $connect

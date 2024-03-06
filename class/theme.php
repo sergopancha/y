@@ -2,7 +2,8 @@
 
 class Theme extends Template {
 
-    private $id_theme;
+    private int $id_theme;
+
     public function __construct(Database $connect, User $user)
     {
         parent::__construct($connect, $user);

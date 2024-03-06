@@ -3,7 +3,8 @@
 class Message extends Template {
 
     private
-        int $id_theme, $id_message;
+        int $id_message;
+
     public function __construct(Database $connect, User $user)
     {
         parent::__construct($connect, $user);
@@ -21,10 +22,7 @@ class Message extends Template {
      */
     public function showMessage(int $idMessage): void
     {
-       // $themeName = $this->getThemeName($idTheme);
-
         $message = $this->getMessage($idMessage);
-
 
         if ( !empty($message)) {
 
@@ -50,9 +48,6 @@ class Message extends Template {
             $layout = str_replace('%user%', $message->user_id, $layout);
             $layout = str_replace('%messageTime%', $this->renderMessageTime($message->m_time), $layout);
             $layout = str_replace('%messageText%', $message->m_text, $layout);
-
-
-
 
             echo $layout;
 

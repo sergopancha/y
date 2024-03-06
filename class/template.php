@@ -2,10 +2,9 @@
 
 class Template {
 
-    public
-        $db,
-        $user,
-        $tpl;
+    public array $tpl;
+    public User $user;
+    public Database $db;
 
     /**
      * @param Database $connect
