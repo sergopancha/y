@@ -49,7 +49,7 @@ class Template {
                     $arr[] = "<a href='{$item['url']}'>{$item['title']}</a>";
                 }
             }
-            $str = implode(' / ', $arr);
+            $str = '<p>'.implode(' / ', $arr).'</p>';
         }
 
         return $str;
