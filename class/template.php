@@ -17,6 +17,7 @@ class Template {
         $this->user = $user;
 
         $this->tpl['header'] = $this->loadTpl('header.html');
+        $this->tpl['footer'] = $this->loadTpl('footer.html');
 
     }
     /**
