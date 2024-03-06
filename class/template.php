@@ -29,4 +29,30 @@ class Template {
         return
             file_get_contents('tpl/'.$filename);
     }
+
+    /**
+     * @param array $data
+     * @return string
+     */
+    public function makeBreadcrumb(Array $data): string
+    {
+        $str = '';
+        $arr = [];
+
+        if (!empty($data)) {
+
+            foreach ($data as $k=>$item) {
+                if ( empty($item['url']) ) {
+                    $arr[] = $item['title'];
+                }
+                else {
+                    $arr[] = "<a href='{$item['url']}'>{$item['title']}</a>";
+                }
+            }
+            $str = implode(' / ', $arr);
+        }
+
+        return $str;
+
+    }
 }
