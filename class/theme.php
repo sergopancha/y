@@ -45,16 +45,6 @@ class Theme extends Template {
         echo $layout;
     }
 
-    public function checkThemeId(int $id): bool
-    {
-        $this->db->query('select theme_id from theme where theme_id=:theme_id');
-        $this->db->bind(":theme_id", $id );
-        $data = $this->db->single();
-
-        return
-            !empty($data);
-    }
-
     /**
      * @return string
      */
