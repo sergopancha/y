@@ -53,6 +53,20 @@ class Template {
         }
 
         return $str;
+    }
 
+
+    /**
+     * Для вывода названия месяца на русском необходимо подключить к php модуль intl
+     * или завести массив названий месяцев
+     *
+     * @param int $timestamp
+     * @param string $pattern
+     * @return string
+     */
+    public function renderMessageTime(int $timestamp, string $pattern = 'd-M-Y H:m'): string
+    {
+        return
+            date($pattern, $timestamp);
     }
 }
