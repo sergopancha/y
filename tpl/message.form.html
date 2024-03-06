@@ -1,9 +1,11 @@
 %header%
-<form action="" method="post">
+<form action="%action%" method="post">
     <input type="hidden" name="token" value="%token%">
     <input type="hidden" name="idtheme" value="%idtheme%">
+    <input type="hidden" name="iduser" value="%iduser%">
     <p>Введите ваше сообщение. HTML тэги в сообщении игнорируются.</p>
-    <textarea rows="6" cols="20"></textarea>
+    <textarea rows="8" cols="40"></textarea>
+    <br>
     <input type="submit" value="Добавить">
 </form>
 %footer%
