@@ -10,7 +10,6 @@ class ThemesList extends Template {
         $this->tpl['themesList'] = $this->loadTpl('themes.list.html');
         $this->tpl['themesRow'] = $this->loadTpl('themes.row.html');
         $this->tpl['themesRow'] = $this->loadTpl('themes.row.html');
-//print_r($this->tpl);
         $this->showThemesList();
     }
     /**
@@ -21,6 +20,8 @@ class ThemesList extends Template {
         $layout = str_replace('%themesList%',
             $this->getThemesList(), $this->tpl['themesList']);
         $layout = str_replace('%header%', $this->tpl['header'], $layout);
+        $layout = str_replace('%footer%', $this->tpl['footer'], $layout);
+        $layout = str_replace('%headerTitle%', 'Гостевая книга', $layout);
         $layout = str_replace('%themesListIntro%', $this->tpl['themesListIntro'], $layout);
 
         echo $layout;
