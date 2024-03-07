@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>event.pageX demo</title>
+    <style>
+        body {
+            background-color: #eef;
+            padding: 0;
+            margin: 0;
+        }
+
+        #log {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+        }
+
+        .intro {
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .square {
+            width: 30px;
+            height: 30px;
+            background: red;
+        }
+
+        .posLeftTop {
+            background: yellow;
+        }
+
+        .posLeftBottom {
+            background: green;
+        }
+
+        .posRightTop {
+            background: blue;
+        }
+
+        .posRightBottom {
+            background: brown;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+</head>
+<body>
+<div class="intro">Отслеживание перемещение курсора мыши, изменение свойства объекта в зависимости от положения курсора мыши.</div>
+<div class="square"></div>
+<div id="log"></div>
+
+<script>
+    $(document).ready(function ($) {
+
+        var
+            docWidth = $(window).width(),
+            docHeight = $(window).height(),
+            squareParam = 30,
+            halfWidth = docWidth/2,
+            halfHeight = docHeight/2;
+
+        setPosLimits(docWidth, docHeight, squareParam);
+
+        $(window).on("resize", function (eventResize) {
+            docWidth = $(window).width();
+            docHeight = $(window).height();
+
+            setPosLimits(docWidth, docHeight, squareParam);
+
+        })
+
+        $(window).on("mousemove", function (event) {
+            let
+                posX = event.pageX,
+                posY = event.pageY;
+
+            setPosLimits(docWidth, docHeight, squareParam);
+
+            if (posX > maxRightPosLimit) posX = maxRightPosLimit;
+            if (posY > maxBottomPosLimit) posY = maxBottomPosLimit;
+
+            $(".square").css('margin-left', posX).css('margin-top', posY);
+            $("#log").css('margin-left', 0).css('margin-top', 0).text("pageX: " + event.pageX + ", pageY: " + event.pageY);
+        });
+
+        function setPosLimits(width, height, param) {
+
+            maxRightPosLimit = docWidth - squareParam;
+            maxBottomPosLimit = docHeight - squareParam;
+        }
+    });
+</script>
+
+</body>
+</html>
