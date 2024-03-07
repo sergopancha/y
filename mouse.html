@@ -70,7 +70,6 @@
             docHeight = $(window).height();
 
             setPosLimits(docWidth, docHeight, squareParam);
-
         })
 
         $(window).on("mousemove", function (event) {
@@ -79,6 +78,7 @@
                 posY = event.pageY;
 
             setPosLimits(docWidth, docHeight, squareParam);
+            calculateObjectPosition(posX, posY);
 
             if (posX > maxRightPosLimit) posX = maxRightPosLimit;
             if (posY > maxBottomPosLimit) posY = maxBottomPosLimit;
@@ -87,6 +87,16 @@
             $("#log").css('margin-left', 0).css('margin-top', 0).text("pageX: " + event.pageX + ", pageY: " + event.pageY);
         });
 
+        function calculateObjectPosition(posX, posY) {
+            if (posX < halfWidth && posY < halfHeight) setObjStyle('green');
+            if (posX < halfWidth && posY >= halfHeight) setObjStyle('yellow');
+            if (posX >= halfWidth && posY < halfHeight) setObjStyle('brown');
+            if (posX >= halfWidth && posY >= halfHeight) setObjStyle('blue');
+        }
+
+        function setObjStyle(bgColor) {
+            $('.square').css('background', bgColor);
+        }
         function setPosLimits(width, height, param) {
 
             maxRightPosLimit = docWidth - squareParam;
