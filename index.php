@@ -9,7 +9,7 @@ require "class/route.php";
 $route = new Route;
 
 // перечисляем все допустимые роуты
-$route->addItems(['themeslist', 'theme', 'message', 'msgadd']);
+$route->addItems(['themeslist', 'theme', 'message', 'msgadd', 'msgsave']);
 
 $connect = new Database;
 $user = new User($connect);
@@ -18,7 +18,7 @@ $user = new User($connect);
 // по умолчанию грузим список тематик
 $path = empty($_GET['mode'])? 'themeslist': trim(htmlentities($_GET['mode']));
 
-// если маршрут указан неверно, то грузим список тематик
+// если маршрут указан неверно, то завешаем
 if ( !$route->check($path)) {
     die('unknown method: '.$path);
 }
