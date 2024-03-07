@@ -40,10 +40,10 @@ class Msgadd extends Template {
             $layout = str_replace('%footer%', $this->tpl['footer'], $layout);
             $layout = str_replace('%headerTitle%', $title, $layout);
             $layout = str_replace('%breadcrumb%', $this->makeBreadcrumb($arrBreadcrumb), $layout);
-            $layout = str_replace('%itTheme%', $idTheme, $layout);
+            $layout = str_replace('%idtheme%', $idTheme, $layout);
             $layout = str_replace('%iduser%', $this->user->getUserId(), $layout);
             $layout = str_replace('%token%', md5(mt_rand(11111,99999)), $layout);
-            $layout = str_replace('%action%', '?mode=msgsave&idtheme='.$idTheme, $layout);
+            $layout = str_replace('%action%', '?mode=msgsave', $layout);
 
             echo $layout;
     }
