@@ -29,17 +29,17 @@ class User {
     }
 
     /**
-     * @return false|mixed|string
+     * @return int
      */
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->id;
     }
 
     /**
-     * @return mixed|string
+     * @return string
      */
-    public function getUserHash()
+    public function getUserHash(): string
     {
         return $this->hash;
     }
